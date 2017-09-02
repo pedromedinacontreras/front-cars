@@ -20,7 +20,7 @@ export function App(props) {
     <AppWrapper>
       <Helmet
         titleTemplate="%s - Noticias"
-        defaultTitle="Noticias recientes"
+        defaultTitle="ReactJs - Apollo Client"
         meta={[
           { name: 'description', content: 'React.js-Apollo App' },
         ]}

@@ -15,7 +15,21 @@ import {
 } from 'material-ui/Table';
 
 class TodoTable extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  handleOnCheckItem = (index) => {
+    const { onCheckItem } = this.props;
+    onCheckItem(index);
+  }
   render() {
+    const { todos } = this.props;
+    const items = todos.map(({ titulo, descripcion, isDone }, index) => (
+      <TodoItem
+        key={index}
+        onCheck={() => this.handleOnCheckItem(index)}
+        titulo={titulo}
+        descripcion={descripcion}
+        isDone={isDone}
+      />
+    ));
     return (
       <Table
         selectable={false}
@@ -25,12 +39,7 @@ class TodoTable extends React.PureComponent { // eslint-disable-line react/prefe
           <TodoHeader />
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
-          <TodoItem
-            onCheck={() => {}}
-            titulo={'titulo'}
-            descripcion={'descripcion'}
-            isDone={false}
-          />
+          {items}
         </TableBody>
       </Table>
     );
@@ -38,7 +47,13 @@ class TodoTable extends React.PureComponent { // eslint-disable-line react/prefe
 }
 
 TodoTable.propTypes = {
-  onCheck: PropTypes.func,
+  onCheckItem: PropTypes.func,
+  todos: PropTypes.arrayOf(PropTypes.object),
+};
+
+TodoTable.defaultProps = {
+  todos: [],
+  onCheckItem: () => {},
 };
 
 export default TodoTable;
