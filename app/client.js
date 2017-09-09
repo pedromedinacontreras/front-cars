@@ -1,7 +1,7 @@
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 
 const networkInterface = createNetworkInterface({
-  uri: 'http://your-url.com',
+  uri: 'http://35.185.96.240/api',
 });
 networkInterface.use([{
   applyMiddleware(req, next) {
@@ -9,8 +9,8 @@ networkInterface.use([{
     req.options.headers = {}; // eslint-disable-line
     }
 
-    const token = 'token';
-    req.options.headers.authorization = token ? `Bearer ${token}` : null; // eslint-disable-line
+    // const token = 'token';
+    // req.options.headers.authorization = token ? `Bearer ${token}` : null; // eslint-disable-line
     next();
   },
 }]);
