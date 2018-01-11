@@ -11,18 +11,24 @@ import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import openSocket from 'socket.io-client';
 import { createStructuredSelector } from 'reselect';
 import makeSelectHome from './selectors';
 import * as HomeActions from './actions';
 import { Container, Title, Card, Text, Row, TextInput, ButtonsContainer } from './StyledComponents';
+// const socket = openSocket('127.0.0.1:5050');
+const socket = openSocket('https://cars-190303.appspot.com:8080');
+// const socket = openSocket('https://172.217.4.148:8080');
+
 
 export class Home extends React.Component { // eslint-disable-line react/prefer-stateless-function
   state = {
     value: 0,
   }
   handleSumar = () => {
-    const { Home: { contador }, setCountAction } = this.props;
-    setCountAction(contador + 1);
+    socket.emit('envioDeDatos', { carro: 'pal danish' });
+    // const { Home: { contador }, setCountAction } = this.props;
+    // setCountAction(contador + 1);
   }
   handleUpdateName = (event, text) => {
     const { setNameAction } = this.props;
@@ -30,6 +36,11 @@ export class Home extends React.Component { // eslint-disable-line react/prefer-
   }
   render() {
     const { Home: { contador } } = this.props;
+    socket.emit('subscribeToTimer', 1000);
+    socket.emit('envioDeDatos', { saludos: 'pal danish' });
+    socket.on('recibiendo', (data) => {
+      console.log(data);
+    });
     return (
       <Container>
         <Title>Capacitación Redux</Title>
